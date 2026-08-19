@@ -34,7 +34,14 @@
   <h1>NOMII Carousel Builder</h1>
   <p class="sub">Pega el <code>carousel.figma.json</code> generado por la skill y crea láminas editables 1080×1440 con la marca NOMII.</p>
 
-  <label for="json">carousel.figma.json</label>
+  <label for="url">Cargar desde URL (1 clic) — opcional</label>
+  <div class="row" style="margin-top:0">
+    <input id="url" type="text" placeholder="https://…/carousel.figma.json"
+      style="flex:1;border:1px solid #d5dbe0;border-radius:8px;padding:9px 10px;font-size:11px">
+    <button class="ghost" id="fetch" style="flex:0 0 auto;padding:9px 14px">Cargar y construir</button>
+  </div>
+
+  <label for="json" style="margin-top:12px">…o pega el carousel.figma.json</label>
   <textarea id="json" placeholder='{ "carousel": { "id": "...", "title": "..." }, "slides": [ ... ] }'></textarea>
 
   <div class="row">
@@ -91,10 +98,18 @@ Templates soportados:
     parent.postMessage({ pluginMessage: { type: 'build', data } }, '*');
   };
 
+  $('fetch').onclick = () => {
+    const url = $('url').value.trim();
+    if (!url) return setStatus('Pega una URL al carousel.figma.json.', 'err');
+    setStatus('Descargando…','');
+    parent.postMessage({ pluginMessage: { type: 'loadUrl', url } }, '*');
+  };
+
   function setStatus(msg, cls){ const s = $('status'); s.textContent = msg; s.className = 'status ' + (cls||''); }
 
   onmessage = (e) => {
     const msg = e.data.pluginMessage; if (!msg) return;
+    if (msg.type === 'progress') setStatus(msg.message, '');
     if (msg.type === 'done') setStatus('✓ ' + msg.count + ' láminas creadas. Revisa el lienzo.', 'ok');
     if (msg.type === 'error') setStatus('Error: ' + msg.message, 'err');
   };

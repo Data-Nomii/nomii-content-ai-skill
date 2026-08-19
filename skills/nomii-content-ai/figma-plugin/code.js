@@ -29,10 +29,22 @@ const FONT = {
 };
 
 figma.ui.onmessage = async (msg) => {
-  if (msg.type !== 'build') return;
   try {
+    let data = msg.data;
+    if (msg.type === 'loadUrl') {
+      if (!msg.url) throw new Error('Falta la URL.');
+      figma.ui.postMessage({ type: 'progress', message: 'Descargando JSON…' });
+      const res = await fetch(msg.url);
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' al leer la URL.');
+      data = await res.json();
+    } else if (msg.type !== 'build') {
+      return;
+    }
+    if (!data || !Array.isArray(data.slides) || !data.slides.length) {
+      throw new Error('El JSON no tiene un arreglo "slides".');
+    }
     await loadFonts();
-    const built = await buildCarousel(msg.data);
+    const built = await buildCarousel(data);
     figma.ui.postMessage({ type: 'done', count: built });
     figma.notify('NOMII: ' + built + ' láminas creadas');
   } catch (e) {
@@ -40,6 +52,30 @@ figma.ui.onmessage = async (msg) => {
     figma.notify('NOMII error: ' + (e && e.message || e), { error: true });
   }
 };
+
+// Devuelve la fuente de imagen de una lámina (URL http(s) o data URI base64), o null.
+function imageSrcOf(s) {
+  const f = s.fields || {};
+  const cand = s.selected_image_url || s.image_url || f.image_url || f.image;
+  if (typeof cand === 'string' && (/^https?:\/\//i.test(cand) || /^data:image\//i.test(cand))) return cand;
+  return null;
+}
+
+// Rellena la capa "image" del frame con la foto real.
+async function fillImage(frame, src) {
+  const target = frame.findOne(function (n) { return n.name === 'image' && n.type === 'RECTANGLE'; });
+  if (!target) return;
+  let image;
+  if (/^data:image\//i.test(src)) {
+    const b64 = src.slice(src.indexOf(',') + 1);
+    image = figma.createImage(figma.base64Decode(b64));
+  } else {
+    image = await figma.createImageAsync(src);
+  }
+  target.fills = [{ type: 'IMAGE', scaleMode: 'FILL', imageHash: image.hash }];
+  const label = frame.findOne(function (n) { return n.name === 'image_label'; });
+  if (label) label.visible = false;
+}
 
 async function loadFonts() {
   const want = { light: 'Light', regular: 'Regular', medium: 'Medium', italic: 'Medium Italic' };
@@ -176,6 +212,7 @@ async function buildCarousel(data) {
   const anchorX = Math.round(figma.viewport.center.x - ((W + GAP) * slides.length) / 2);
   const anchorY = Math.round(figma.viewport.center.y - H / 2);
 
+  const imageJobs = [];
   for (let i = 0; i < slides.length; i++) {
     const s = slides[i] || {};
     const n = s.number || (i + 1);
@@ -185,6 +222,14 @@ async function buildCarousel(data) {
     f.y = anchorY;
     figma.currentPage.appendChild(f);
     group.push(f);
+    const src = imageSrcOf(s);
+    if (src) imageJobs.push({ frame: f, src: src, n: n });
+  }
+  // Cargar imágenes reales (si el JSON las trae). No bloquea la creación de frames.
+  for (const job of imageJobs) {
+    figma.ui.postMessage({ type: 'progress', message: 'Cargando imagen ' + job.n + '/' + slides.length + '…' });
+    try { await fillImage(job.frame, job.src); }
+    catch (e) { figma.notify('Imagen lámina ' + job.n + ' no cargó: ' + (e && e.message || e)); }
   }
   if (group.length) {
     figma.currentPage.selection = group;

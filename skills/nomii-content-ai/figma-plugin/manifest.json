@@ -3,5 +3,9 @@
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
-  "editorType": ["figma", "dev"]
+  "editorType": ["figma", "dev"],
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "Carga el carousel.figma.json desde una URL y descarga las imágenes de cada lámina para insertarlas en el diseño."
+  }
 }
