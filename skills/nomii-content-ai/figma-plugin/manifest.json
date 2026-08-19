@@ -1,0 +1,13 @@
+{
+  "name": "NOMII Carousel Builder",
+  "id": "nomii-carousel-builder",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "reasoning": "El plugin solo lee el JSON pegado por el usuario y construye frames locales. No hace requests de red."
+  }
+}
