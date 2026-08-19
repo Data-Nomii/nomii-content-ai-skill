@@ -20,6 +20,7 @@ const C = {
 function hex(r, g, b) { return { r: r / 255, g: g / 255, b: b / 255 }; }
 function solid(color, opacity) { return [{ type: 'SOLID', color: color, opacity: opacity == null ? 1 : opacity }]; }
 
+// FONT se resuelve en loadFonts() a estilos realmente disponibles (con fallback).
 const FONT = {
   light:  { family: 'Rubik', style: 'Light' },
   medium: { family: 'Rubik', style: 'Medium' },
@@ -41,11 +42,29 @@ figma.ui.onmessage = async (msg) => {
 };
 
 async function loadFonts() {
-  const styles = ['Light', 'Regular', 'Medium', 'Medium Italic'];
-  for (const style of styles) {
-    try { await figma.loadFontAsync({ family: 'Rubik', style: style }); }
-    catch (e) { /* si falta un peso, seguimos con los disponibles */ }
+  const want = { light: 'Light', regular: 'Regular', medium: 'Medium', italic: 'Medium Italic' };
+  const loaded = {};
+  for (const key in want) {
+    try { await figma.loadFontAsync({ family: 'Rubik', style: want[key] }); loaded[key] = { family: 'Rubik', style: want[key] }; }
+    catch (e) { /* estilo no disponible */ }
   }
+  const anyRubik = loaded.regular || loaded.medium || loaded.light || loaded.italic;
+  if (!anyRubik) {
+    // Rubik no disponible en este Figma: fallback a Inter (siempre presente).
+    await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+    let interMed = { family: 'Inter', style: 'Regular' };
+    try { await figma.loadFontAsync({ family: 'Inter', style: 'Medium' }); interMed = { family: 'Inter', style: 'Medium' }; } catch (e) {}
+    let interIt = interMed;
+    try { await figma.loadFontAsync({ family: 'Inter', style: 'Italic' }); interIt = { family: 'Inter', style: 'Italic' }; } catch (e) {}
+    FONT.regular = FONT.light = { family: 'Inter', style: 'Regular' };
+    FONT.medium = interMed; FONT.italic = interIt;
+    figma.notify('Rubik no está disponible: usando Inter como sustituto.');
+    return;
+  }
+  FONT.regular = loaded.regular || anyRubik;
+  FONT.light   = loaded.light   || FONT.regular;
+  FONT.medium  = loaded.medium  || FONT.regular;
+  FONT.italic  = loaded.italic  || loaded.medium || FONT.regular;
 }
 
 // ---------- helpers de nodos ----------
