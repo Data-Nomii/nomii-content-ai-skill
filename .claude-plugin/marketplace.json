@@ -1,0 +1,22 @@
+{
+  "name": "nomii-content-ai-skills",
+  "owner": {
+    "name": "NOMII",
+    "email": "ops@example.com"
+  },
+  "metadata": {
+    "description": "NOMII Content AI skill package for Claude Code: Notion grid, image design database, brand system, carousel generation, and editable Figma handoff.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "nomii-content-ai",
+      "description": "Generate and operate NOMII content from a Notion content grid using the NOMII brand/design system, classified image database, carousel workflow, and Figma-editable output contract.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/nomii-content-ai"
+      ]
+    }
+  ]
+}

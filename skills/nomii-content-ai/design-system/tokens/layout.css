@@ -1,0 +1,38 @@
+/* NOMII — Canvas, grid, spacing, radii. Carousel format is 1080×1440 (3:4). */
+:root{
+  /* Canvas */
+  --canvas-w:1080px;
+  --canvas-h:1440px;
+
+  /* Safe area (official) */
+  --safe-top:85px;
+  --safe-bottom:85px;
+  --safe-side:63px;
+
+  /* Brand mark sizing */
+  --logo-w:200px;        /* Logo top-right, laminas 1..N-1 */
+  --isotipo-cta:220px;   /* Isotipo circle on final CTA lamina */
+
+  /* Spacing scale */
+  --space-1:8px;
+  --space-2:16px;
+  --space-3:24px;
+  --space-4:32px;
+  --space-5:48px;
+  --space-6:64px;
+  --space-7:96px;
+
+  /* Radii */
+  --radius-pill:999px;   /* pills, chips, chat bubbles */
+  --radius-card:36px;    /* pop-out image cards */
+  --radius-md:20px;
+  --radius-sm:12px;
+
+  /* Elevation — soft, low-contrast (imagery-forward brand) */
+  --shadow-card:0 24px 60px rgba(16,69,116,.14);
+  --shadow-pill:0 8px 24px rgba(16,69,116,.10);
+  --shadow-soft:0 12px 32px rgba(60,60,59,.08);
+
+  /* Photo protection gradient (bottom fade for full-bleed text) */
+  --scrim-bottom:linear-gradient(to top,rgba(255,255,255,.96) 0%,rgba(255,255,255,.85) 32%,rgba(255,255,255,0) 70%); /* @kind other */
+}
