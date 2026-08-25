@@ -41,6 +41,9 @@
     <button class="ghost" id="fetch" style="flex:0 0 auto;padding:9px 14px">Cargar y construir</button>
   </div>
 
+  <label for="file" style="margin-top:12px">…o carga un archivo .json (recomendado si trae imágenes)</label>
+  <input type="file" id="file" accept=".json,application/json" style="font-size:11px;margin-bottom:4px">
+
   <label for="json" style="margin-top:12px">…o pega el carousel.figma.json</label>
   <textarea id="json" placeholder='{ "carousel": { "id": "...", "title": "..." }, "slides": [ ... ] }'></textarea>
 
@@ -96,6 +99,20 @@ Templates soportados:
     if (!data || !Array.isArray(data.slides) || !data.slides.length) return setStatus('Falta el arreglo "slides".', 'err');
     setStatus('Construyendo…','');
     parent.postMessage({ pluginMessage: { type: 'build', data } }, '*');
+  };
+
+  $('file').onchange = (e) => {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      let data;
+      try { data = JSON.parse(r.result); }
+      catch (err) { return setStatus('JSON inválido: ' + err.message, 'err'); }
+      if (!data || !Array.isArray(data.slides) || !data.slides.length) return setStatus('Falta el arreglo "slides".', 'err');
+      setStatus('Construyendo desde archivo…', '');
+      parent.postMessage({ pluginMessage: { type: 'build', data } }, '*');
+    };
+    r.readAsText(f);
   };
 
   $('fetch').onclick = () => {
