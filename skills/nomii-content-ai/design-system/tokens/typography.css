@@ -1,0 +1,34 @@
+/* NOMII — Typography tokens (Rubik family only; Bold is PROHIBITED) */
+@font-face{font-family:"Rubik";font-style:normal;font-weight:300;font-display:swap;src:url("../assets/fonts/Rubik-Light.ttf") format("truetype")}
+@font-face{font-family:"Rubik";font-style:normal;font-weight:500;font-display:swap;src:url("../assets/fonts/Rubik-Medium.ttf") format("truetype")}
+@font-face{font-family:"Rubik";font-style:italic;font-weight:500;font-display:swap;src:url("../assets/fonts/Rubik-MediumItalic.ttf") format("truetype")}
+
+:root{
+  /* Family */
+  --font-brand:"Rubik",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  /* Weights — only these three exist. Never use 700/Bold. */
+  --fw-light:300;   /* @kind font */ /* body, running paragraphs, secondary phrases */
+  --fw-medium:500;  /* @kind font */ /* titles, headlines, key words */
+  /* italic + medium (fw-medium + font-style:italic) = emphasis / empathy / pill text */
+
+  /* Type scale — tuned for the 1080×1440 carousel canvas */
+  --fs-display:52px;  /* hero stat / opening statement (portada) */
+  --fs-h1:52px;       /* portada title (42–52) */
+  --fs-h2:38px;       /* interior heading (top of cuerpo range) */
+  --fs-body-lg:36px;  /* lead / bajada */
+  --fs-body:34px;     /* body / cuerpo (32–38) */
+  --fs-pill:34px;     /* pill / button (30–36) */
+  --fs-caption:28px;  /* subtext / parenthetical (24–28) */
+
+  --lh-tight:1.15;  /* @kind font */
+  --lh-snug:1.3;    /* @kind font */
+  --lh-body:1.45;   /* @kind font */
+
+  --tracking-tight:-0.01em;
+  --tracking-normal:0em;
+
+  /* Semantic aliases */
+  --text-title:var(--fw-medium);
+  --text-body:var(--fw-light);
+}

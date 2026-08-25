@@ -1,0 +1,17 @@
+<!-- @dsCard group="Foundations" viewport="700x230" name="Canvas & Safe Area" subtitle="1080×1440 (3:4) with 85px / 63px margins" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css"><style>
+html,body{margin:0}body{font-family:var(--font-brand);background:#fff;padding:20px;display:flex;gap:26px;align-items:center}
+.canvas{width:150px;height:200px;background:#F8F8F8;border:1px solid #e6e6e6;border-radius:8px;position:relative;flex:none}
+.safe{position:absolute;inset:12px 8px;border:1.5px dashed #77BFD0;border-radius:4px}
+.logo{position:absolute;top:6px;right:6px;width:34px;height:14px;background:#104574;border-radius:3px}
+.legend{font-weight:300;font-size:16px;color:#3C3C3B;line-height:1.9}
+.legend b{font-weight:500}
+.dot{display:inline-block;width:10px;height:10px;border:1.5px dashed #77BFD0;border-radius:2px;margin-right:8px;vertical-align:middle}
+</style></head><body>
+<div class="canvas"><div class="safe"></div><div class="logo"></div></div>
+<div class="legend">
+<div><b>Lienzo</b> — 1080 × 1440 px · 3:4 vertical</div>
+<div><span class="dot"></span><b>Zona segura</b> — 85 px arriba/abajo, 63 px laterales</div>
+<div><b>Logo</b> — esquina superior derecha, 200 px de ancho</div>
+</div>
+</body></html>

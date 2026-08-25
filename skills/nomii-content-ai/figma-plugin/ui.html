@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --celeste:#77BFD0; --azul:#104574; --dark:#3C3C3B; --soft:#F8F8F8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Rubik,system-ui,sans-serif;color:var(--dark);background:#fff;font-size:12px}
+  .wrap{padding:14px}
+  h1{font-size:13px;margin:0 0 2px;color:var(--azul)}
+  p.sub{margin:0 0 12px;color:#666;font-size:11px;line-height:1.4}
+  label{display:block;font-weight:600;margin:0 0 6px;font-size:11px}
+  textarea{width:100%;height:230px;resize:vertical;border:1px solid #d5dbe0;border-radius:8px;
+    padding:10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;line-height:1.45}
+  textarea:focus{outline:none;border-color:var(--celeste)}
+  .row{display:flex;gap:8px;margin-top:12px}
+  button{flex:1;border:none;border-radius:999px;padding:11px 14px;font-weight:600;font-size:12px;cursor:pointer}
+  .primary{background:var(--azul);color:#fff}
+  .primary:hover{background:#0d3a63}
+  .ghost{background:#eef1f4;color:var(--dark)}
+  .ghost:hover{background:#e3e8ed}
+  .status{margin-top:10px;font-size:11px;min-height:16px}
+  .status.err{color:#c0392b}
+  .status.ok{color:#1e7e4b}
+  details{margin-top:12px}
+  summary{cursor:pointer;color:var(--azul);font-size:11px}
+  pre{background:var(--soft);border-radius:8px;padding:8px;overflow:auto;font-size:10px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NOMII Carousel Builder</h1>
+  <p class="sub">Pega el <code>carousel.figma.json</code> generado por la skill y crea láminas editables 1080×1440 con la marca NOMII.</p>
+
+  <label for="url">Cargar desde URL (1 clic) — opcional</label>
+  <div class="row" style="margin-top:0">
+    <input id="url" type="text" placeholder="https://…/carousel.figma.json"
+      style="flex:1;border:1px solid #d5dbe0;border-radius:8px;padding:9px 10px;font-size:11px">
+    <button class="ghost" id="fetch" style="flex:0 0 auto;padding:9px 14px">Cargar y construir</button>
+  </div>
+
+  <label for="file" style="margin-top:12px">…o carga un archivo .json (recomendado si trae imágenes)</label>
+  <input type="file" id="file" accept=".json,application/json" style="font-size:11px;margin-bottom:4px">
+
+  <label for="json" style="margin-top:12px">…o pega el carousel.figma.json</label>
+  <textarea id="json" placeholder='{ "carousel": { "id": "...", "title": "..." }, "slides": [ ... ] }'></textarea>
+
+  <div class="row">
+    <button class="ghost" id="sample">Cargar ejemplo</button>
+    <button class="primary" id="build">Construir carrusel</button>
+  </div>
+  <div class="status" id="status"></div>
+
+  <details>
+    <summary>¿Qué capas genera?</summary>
+    <pre>background, image, logo, isotipo,
+title, subtitle, caption, pill,
+body, bullet_1..3, chat_1..3, cta
+
+Frames: slide_01, slide_02, ...
+Templates soportados:
+- Portada tipo A - cover soft azul
+- Portada tipo B - cover soft blanco
+- Interior - card text
+- Interior - chat bubbles
+- Interior - 50/50
+- Intermedio - flat pause
+- Interior - pop-up card
+- Cierre - CTA</pre>
+  </details>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const SAMPLE = {
+    carousel: { id: "guardias-alemania", title: "Guardias médicas en Alemania", objective: "Awareness", buyer_persona: "Médico mexicano", kpi: "Guardados" },
+    slides: [
+      { number:1, template:"Portada tipo A - cover soft azul", role:"Hook",
+        fields:{ pill:"Es ilegal.", title:"Un médico en Alemania no puede hacer una guardia de más de 24 horas" } },
+      { number:2, template:"Interior - 50/50", role:"Contexto",
+        fields:{ body:"En Alemania, los turnos médicos están regulados por ley.", caption:"Límites de horas y descansos obligatorios entre guardias." } },
+      { number:3, template:"Interior - chat bubbles", role:"Empatía",
+        fields:{ subtitle:"Y probablemente te preguntas", chat_1:"¿Qué hago entonces?", chat_2:"¿Lo sigo intentando?", chat_3:"¿O nunca me especializo?" } },
+      { number:4, template:"Interior - card text", role:"Prueba",
+        fields:{ subtitle:"Pero no es una promesa:", bullet_1:"un sistema regulado", bullet_2:"con normas claras", bullet_3:"con condiciones que se cumplen" } },
+      { number:5, template:"Cierre - CTA", role:"CTA",
+        fields:{ cta:"Si quieres saber en qué consiste ese proceso", pill:"haz click aquí" } }
+    ]
+  };
+
+  $('sample').onclick = () => { $('json').value = JSON.stringify(SAMPLE, null, 2); setStatus('Ejemplo cargado. Pulsa "Construir carrusel".',''); };
+
+  $('build').onclick = () => {
+    let data;
+    try { data = JSON.parse($('json').value); }
+    catch (e) { return setStatus('JSON inválido: ' + e.message, 'err'); }
+    if (!data || !Array.isArray(data.slides) || !data.slides.length) return setStatus('Falta el arreglo "slides".', 'err');
+    setStatus('Construyendo…','');
+    parent.postMessage({ pluginMessage: { type: 'build', data } }, '*');
+  };
+
+  $('file').onchange = (e) => {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      let data;
+      try { data = JSON.parse(r.result); }
+      catch (err) { return setStatus('JSON inválido: ' + err.message, 'err'); }
+      if (!data || !Array.isArray(data.slides) || !data.slides.length) return setStatus('Falta el arreglo "slides".', 'err');
+      setStatus('Construyendo desde archivo…', '');
+      parent.postMessage({ pluginMessage: { type: 'build', data } }, '*');
+    };
+    r.readAsText(f);
+  };
+
+  $('fetch').onclick = () => {
+    const url = $('url').value.trim();
+    if (!url) return setStatus('Pega una URL al carousel.figma.json.', 'err');
+    setStatus('Descargando…','');
+    parent.postMessage({ pluginMessage: { type: 'loadUrl', url } }, '*');
+  };
+
+  function setStatus(msg, cls){ const s = $('status'); s.textContent = msg; s.className = 'status ' + (cls||''); }
+
+  onmessage = (e) => {
+    const msg = e.data.pluginMessage; if (!msg) return;
+    if (msg.type === 'progress') setStatus(msg.message, '');
+    if (msg.type === 'done') setStatus('✓ ' + msg.count + ' láminas creadas. Revisa el lienzo.', 'ok');
+    if (msg.type === 'error') setStatus('Error: ' + msg.message, 'err');
+  };
+</script>
+</body>
+</html>

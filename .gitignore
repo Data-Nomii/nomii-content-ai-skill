@@ -1,0 +1,19 @@
+.DS_Store
+node_modules/
+.env
+.env.*
+*.log
+secrets/
+memory/
+AGENTS.md
+PROJECT_ACCESS.md
+openclaw-workspace-state.json
+outputs/
+imports/drive-banco-imagenes/raw/
+**/*token*
+**/*secret*
+**/*credential*
+
+# Design-system design tokens are not secrets — keep them tracked
+!**/design-system/tokens/
+!**/design-system/tokens/**

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="NOMII Carousel" description="7-lámina Instagram carousel (1080×1440) — cover, chat, 50/50, pop-out, pause, CTA" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+@font-face{font-family:"Rubik";font-style:normal;font-weight:300;src:url("../../assets/fonts/Rubik-Light.ttf") format("truetype")}
+@font-face{font-family:"Rubik";font-style:normal;font-weight:500;src:url("../../assets/fonts/Rubik-Medium.ttf") format("truetype")}
+@font-face{font-family:"Rubik";font-style:italic;font-weight:500;src:url("../../assets/fonts/Rubik-MediumItalic.ttf") format("truetype")}
+body{margin:0;background:#eceef0}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;align-items:center;gap:28px;padding:40px;font-family:'Rubik',sans-serif">
+
+<!-- Portada · Opción A · Foto full-bleed (texto blanco + recuadros) -->
+<div style="position:relative;width:1080px;height:1440px;background:#3C3C3B;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/banco/banco-2.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(16,69,116,.72) 0%,rgba(16,69,116,.28) 34%,rgba(16,69,116,0) 62%)"></div>
+<img src="../../assets/logo-blanco.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px">
+<div style="position:absolute;left:63px;right:63px;bottom:110px;display:flex;flex-direction:column;gap:20px;align-items:flex-start">
+<span style="display:inline-flex;background:#77BFD0;color:#fff;font-weight:500;font-style:italic;font-size:49px;padding:16px 36px;border-radius:999px;box-shadow:0 8px 24px rgba(16,69,116,.1)">4 de cada 5 médicos</span>
+<h1 style="margin:0;font-weight:500;font-size:75px;line-height:1.1;color:#fff">no quedan en el ENARM</h1>
+<p style="margin:0;font-weight:300;font-size:36px;color:#fff;opacity:.9">(no lo decimos nosotros, lo dicen las estadísticas)</p>
+</div>
+</div>
+
+<!-- Portada · Opción B · Foto full-bleed con difuminado a blanco superior (~1/3) -->
+<div style="position:relative;width:1080px;height:1440px;background:#F8F8F8;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/banco/banco-3.jpg" alt="" style="position:absolute;left:0;right:0;top:230px;bottom:0;width:100%;height:1210px;object-fit:cover;object-position:center top">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,#F8F8F8 0%,#F8F8F8 40%,rgba(248,248,248,0) 60%)"></div>
+<img src="../../assets/logo-azul.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px;z-index:2">
+<div style="position:absolute;left:90px;right:90px;top:200px;display:flex;flex-direction:column;gap:30px;align-items:center;text-align:center">
+<h1 style="margin:0;font-weight:500;font-size:38px;line-height:1.2;color:#3C3C3B">Ser un buen médico en Chile… ya no te diferencia</h1>
+<div style="background:#77BFD0;color:#fff;font-weight:300;font-size:34px;line-height:1.4;padding:28px 36px;border-radius:20px;box-shadow:0 8px 24px rgba(16,69,116,.1);max-width:720px">Porque cada vez hay más profesionales bien formados pero no todos tienen experiencia en sistemas de alto nivel.</div>
+</div>
+</div>
+
+<!-- Lámina 2 · Chat -->
+<div style="position:relative;width:1080px;height:1440px;background:#77BFD0;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/logo-blanco.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px">
+<div style="position:absolute;inset:85px 63px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:26px;text-align:center">
+<p style="margin:0 0 8px;font-weight:300;font-size:36px;color:#fff">Y probablemente te preguntas</p>
+<div style="background:#fff;color:#3C3C3B;font-weight:300;font-size:34px;padding:20px 32px;border-radius:999px;box-shadow:0 12px 32px rgba(60,60,59,.08)">¿Qué hago entonces?</div>
+<div style="background:#fff;color:#3C3C3B;font-weight:300;font-size:34px;padding:20px 32px;border-radius:999px;box-shadow:0 12px 32px rgba(60,60,59,.08)">¿Lo sigo intentando?</div>
+<div style="background:#fff;color:#3C3C3B;font-weight:300;font-size:34px;padding:20px 32px;border-radius:999px;box-shadow:0 12px 32px rgba(60,60,59,.08)">¿O asumo que nunca me podré especializar?</div>
+</div>
+</div>
+
+<!-- Lámina 3 · 50/50 -->
+<div style="position:relative;width:1080px;height:1440px;background:#F8F8F8;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/logo-azul.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px;z-index:2">
+<img src="../../assets/banco/banco-7.jpg" alt="" style="width:100%;height:720px;object-fit:cover;display:block">
+<div style="height:720px;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:0 90px;text-align:center">
+<p style="margin:0 auto;max-width:640px;font-weight:300;font-size:45px;line-height:1.3;color:#3C3C3B">Porque volver a intentar el ENARM <span style="font-weight:500">es comprometer otro año completo</span></p>
+<p style="margin:0 auto;max-width:640px;font-weight:500;font-style:italic;font-size:45px;line-height:1.35;color:#77BFD0">Por eso, hay que ser estratégicos</p>
+</div>
+</div>
+
+<!-- Lámina interior · Card + Texto (imagen enmascarada arriba, lista debajo) -->
+<div style="position:relative;width:1080px;height:1440px;background:#F8F8F8;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/logo-azul.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px">
+<div style="position:absolute;inset:85px 63px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px">
+<img src="../../assets/banco/banco-8.jpg" alt="" style="width:640px;height:400px;object-fit:cover;border-radius:36px;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<div style="display:flex;flex-direction:column;gap:26px;align-items:center;text-align:center">
+<h2 style="margin:0;font-weight:500;font-size:38px;line-height:1.2;color:#77BFD0">Pero cuando entras al sistema:</h2>
+<div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+<div style="display:flex;align-items:center;gap:16px"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15.5" stroke="#77BFD0" stroke-width="1.5"/><path d="M12 17h10M18 13l4 4-4 4" stroke="#77BFD0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-weight:300;font-size:34px;color:#3C3C3B">No tienes el <em style="font-weight:500;font-style:italic">tiempo suficiente</em></span></div>
+<div style="display:flex;align-items:center;gap:16px"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15.5" stroke="#77BFD0" stroke-width="1.5"/><path d="M12 17h10M18 13l4 4-4 4" stroke="#77BFD0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-weight:300;font-size:34px;color:#3C3C3B">No tienes los <em style="font-weight:500;font-style:italic">recursos</em></span></div>
+<div style="display:flex;align-items:center;gap:16px"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15.5" stroke="#77BFD0" stroke-width="1.5"/><path d="M12 17h10M18 13l4 4-4 4" stroke="#77BFD0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-weight:300;font-size:34px;color:#3C3C3B">No tienes las <em style="font-weight:500;font-style:italic">condiciones</em></span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Lámina 4 · Pop-out -->
+<div style="position:relative;width:1080px;height:1440px;background:#F8F8F8;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/logo-azul.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px">
+<div style="position:absolute;inset:85px 63px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:44px">
+<img src="../../assets/banco/banco-12.jpg" alt="" style="width:620px;height:465px;object-fit:cover;object-position:center;border-radius:36px;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<h2 style="margin:0;font-weight:500;font-size:38px;line-height:1.2;text-align:center;color:#3C3C3B">Alemania es uno de esos entornos</h2>
+<div style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center;max-width:820px">
+<span style="font-weight:500;font-size:34px;padding:12px 28px;border-radius:999px;border:1.5px solid #77BFD0;color:#77BFD0">Top 3 en innovación en salud</span>
+<span style="font-weight:500;font-size:34px;padding:12px 28px;border-radius:999px;border:1.5px solid #77BFD0;color:#77BFD0">Centros clínicos de nivel internacional</span>
+<span style="font-weight:500;font-size:34px;padding:12px 28px;border-radius:999px;border:1.5px solid #77BFD0;color:#77BFD0">Alta demanda de médicos</span>
+</div>
+</div>
+</div>
+
+<!-- Lámina 5 · Flat / Pause -->
+<div style="position:relative;width:1080px;height:1440px;background:#104574;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<img src="../../assets/logo-blanco.png" alt="NOMII" style="position:absolute;top:85px;right:63px;width:200px">
+<div style="position:absolute;inset:85px 63px;display:flex;align-items:center;justify-content:center;text-align:center">
+<p style="margin:0 auto;max-width:640px;font-weight:500;font-style:italic;font-size:44px;line-height:1.35;color:#fff">Hay un camino donde sí puedes avanzar con mayor claridad y control</p>
+</div>
+</div>
+
+<!-- Lámina 6 · CTA -->
+<div style="position:relative;width:1080px;height:1440px;background:#77BFD0;overflow:hidden;flex:none;box-shadow:0 24px 60px rgba(16,69,116,.14)">
+<div style="position:absolute;inset:85px 63px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:46px;text-align:center">
+<img src="../../assets/isotipo-blanco.png" alt="NOMII" style="width:288px;height:auto">
+<p style="margin:0;font-weight:500;font-style:italic;font-size:38px;line-height:1.3;color:#fff;max-width:760px">Revisa nuestro perfil y entiende cómo funciona este camino</p>
+<span style="font-weight:500;font-size:34px;padding:16px 36px;border-radius:999px;border:1.5px solid #fff;color:#fff">Conócelo en este link</span>
+</div>
+</div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* NOMII — Color tokens. Exact brand hexes from the official spec. */
+:root{
+  /* Brand core */
+  --nomii-celeste:#77BFD0;   /* Primary Accent — pills, accent backgrounds, key words, isotipo circle */
+  --nomii-azul:#104574;      /* Corporate Blue — secondary contrast, institutional elements */
+  --nomii-gris-oscuro:#3C3C3B;/* Dark Text — body copy on light surfaces */
+  --nomii-gris-claro:#F8F8F8;/* Soft Background — neutral interior lamina bg (never pure white) */
+  --nomii-blanco:#FFFFFF;
+
+  /* Tints / supporting (derived from celeste, for outline pills & hovers) */
+  --celeste-600:#5aa9bc;     /* darker celeste — hover / pressed */
+  --celeste-300:#a9d6e1;     /* lighter celeste — soft fills */
+  --celeste-100:#e4f2f6;     /* faint celeste wash */
+  --azul-600:#0d3a63;        /* darker azul — pressed */
+
+  /* Semantic surfaces */
+  --surface-page:var(--nomii-gris-claro);
+  --surface-card:var(--nomii-blanco);
+  --surface-accent:var(--nomii-celeste);
+  --surface-institutional:var(--nomii-azul);
+
+  /* Semantic text */
+  --text-primary:var(--nomii-gris-oscuro);
+  --text-on-accent:var(--nomii-blanco);
+  --text-on-dark:var(--nomii-blanco);
+  --text-accent:var(--nomii-celeste);
+  --text-institutional:var(--nomii-azul);
+
+  /* Borders */
+  --border-accent:var(--nomii-celeste);
+  --border-institutional:var(--nomii-azul);
+}
